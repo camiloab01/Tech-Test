@@ -26,10 +26,37 @@ namespace SalesTaxCalculator
 
         private static void PrintReceipt(List<Product> productsBought)
         {
+            double totalSalesTaxes = 0;
+            double totalToPay = 0;
+            
             foreach(Product product in productsBought)
             {
-                int productQuantity = productsBought.Select(x => x.GetType)
+                var itemsPaid = (from Product p in productsBought
+                                 where p.GetType() == product.GetType()
+                                 select p);
+
+                int numberOfItemsPaid = itemsPaid.Count();
+
+                foreach (var item in itemsPaid)
+                {
+                    productsBought.Remove(item);
+                }
+
+                if (numberOfItemsPaid > 1)
+                {
+                    Console.WriteLine("{0}: {1}, ({2} @ {3})", product.Name, product.TotalPrice * numberOfItemsPaid, numberOfItemsPaid, product.TotalPrice);
+                }
+                else
+                {
+                    Console.WriteLine("{0}: {1}", product.Name, product.TotalPrice);
+                }
+
+                totalSalesTaxes += product.CalculateSalesTax() * numberOfItemsPaid;
+                totalToPay += product.TotalPrice * numberOfItemsPaid;
             }
+
+            Console.WriteLine("Sales Taxes: {0}", totalSalesTaxes);
+            Console.WriteLine("Total: {0}", totalToPay);
         }
     }
 }
