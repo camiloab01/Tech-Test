@@ -8,6 +8,10 @@ namespace SalesTaxCalculator
 {
     class Food : Product
     {
+        /// <summary>
+        /// Food is exempted of sales taxes, except for imported food
+        /// </summary>
+        /// <returns></returns>
         public override double CalculateSalesTax()
         {
             double salesTax = 0;

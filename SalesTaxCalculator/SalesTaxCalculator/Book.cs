@@ -8,6 +8,10 @@ namespace SalesTaxCalculator
 {
     public class Book : Product
     {
+        /// <summary>
+        /// Books are exempted of sales taxes, except for imported books
+        /// </summary>
+        /// <returns></returns>
         public override double CalculateSalesTax()
         {
             double salesTax = 0;

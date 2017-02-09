@@ -16,6 +16,10 @@ namespace SalesTaxCalculator
 
         public bool IsImported { get; set; }
 
+        /// <summary>
+        /// All Products with some exceptions will be charged with 10% of sales tax
+        /// </summary>
+        /// <returns></returns>
         public virtual double CalculateSalesTax()
         {
             double salesTax = 0;

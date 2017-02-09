@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SalesTaxCalculator
 {
+
+    /// <summary>
+    /// This Program will calculate the sales taxes of a shopping list
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)
@@ -47,9 +51,13 @@ namespace SalesTaxCalculator
             BuyItems(shoppingList);
             PrintReceipt(shoppingList);
 
-
+            Console.ReadKey();
         }
 
+        /// <summary>
+        /// Update each of the products with its corresponding Total Price
+        /// </summary>
+        /// <param name="products"></param>
         private static void BuyItems(List<Product> products)
         {
             foreach(Product product in products)
@@ -58,30 +66,37 @@ namespace SalesTaxCalculator
             }
         }
 
+        /// <summary>
+        /// Prints the receipt with the corresponding sales tax and total price to pay
+        /// </summary>
+        /// <param name="productsBought"></param>
         private static void PrintReceipt(List<Product> productsBought)
         {
             double totalSalesTaxes = 0;
             double totalToPay = 0;
 
-            
-            for(int i = 0; i < productsBought.Count; i++)
+            //Loop into the products to get their sales tax and price and print it in screen
+            for(int i = productsBought.Count; i >= productsBought.Count && productsBought.Count != 0; i--)
             {
-                Product product = productsBought[i];
+                Product product = productsBought.Last();
 
+                //Get the items of the same type that were bought, example: 2 books
                 var itemsPaid = (from Product p in productsBought
                                  where p.GetType() == product.GetType()
                                  select p).ToList();
 
                 int numberOfItemsPaid = itemsPaid.Count();
 
+                //Loop into the items paid to get the sales tax, total price and remove them from the products bought list
                 foreach (Product item in itemsPaid)
                 {
-                    totalSalesTaxes += item.CalculateSalesTax();
+                    totalSalesTaxes += Math.Round(item.CalculateSalesTax()*2, MidpointRounding.AwayFromZero)/2;
                     totalToPay += item.TotalPrice;
 
                     productsBought.Remove(item);
                 }
 
+                //Print in screen the Item or items with its corresponding total price, the way it is printed depends on how many articles of the same type were bought
                 if (numberOfItemsPaid > 1)
                 {
                     Console.WriteLine("{0}: {1}, ({2} @ {3})", product.Name, product.TotalPrice * numberOfItemsPaid, numberOfItemsPaid, product.TotalPrice);
@@ -92,6 +107,7 @@ namespace SalesTaxCalculator
                 }
             }
 
+            //Print the total to pay and the total sales taxes for all the bought products
             Console.WriteLine("Sales Taxes: {0}", totalSalesTaxes);
             Console.WriteLine("Total: {0}", totalToPay);
         }

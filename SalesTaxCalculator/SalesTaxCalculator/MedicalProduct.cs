@@ -8,6 +8,10 @@ namespace SalesTaxCalculator
 {
     class MedicalProduct : Product
     {
+        /// <summary>
+        /// Medical Products are exempted of sales taxes, except for imported Medical Products
+        /// </summary>
+        /// <returns></returns>
         public override double CalculateSalesTax()
         {
             double salesTax = 0;
