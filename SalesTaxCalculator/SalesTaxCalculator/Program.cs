@@ -10,10 +10,44 @@ namespace SalesTaxCalculator
     {
         public static void Main(string[] args)
         {
-            List<Product> shoppingList = new List<Product>();
+            List<Product> shoppingList;
+
+            Console.WriteLine("*******************Scenario 1*******************");
+
+            shoppingList = new List<Product>();
+
+            shoppingList.Add(new Book { Name = "Book", Price = 12.49, IsImported = false });
+            shoppingList.Add(new Book { Name = "Book", Price = 12.49, IsImported = false });
+            shoppingList.Add(new Product { Name = "Music CD", Price = 14.99, IsImported = false });
+            shoppingList.Add(new Food { Name = "Chocolate bar", Price = 0.85, IsImported = false });
 
             BuyItems(shoppingList);
             PrintReceipt(shoppingList);
+
+            Console.WriteLine("*******************Scenario 2*******************");
+
+            shoppingList = new List<Product>();
+
+            shoppingList.Add(new Product { Name = "Imported bottle of perfune", Price = 47.50, IsImported = true });
+            shoppingList.Add(new Food { Name = "Imported box of chocolates", Price = 10, IsImported = true });
+
+            BuyItems(shoppingList);
+            PrintReceipt(shoppingList);
+
+            Console.WriteLine("*******************Scenario 3*******************");
+
+            shoppingList = new List<Product>();
+
+            shoppingList.Add(new Product { Name = "Imported bottle of perfune", Price = 27.99, IsImported = true });
+            shoppingList.Add(new Product { Name = "Bottle of perfune", Price = 18.99, IsImported = false });
+            shoppingList.Add(new MedicalProduct { Name = "Packet of headache pills", Price = 9.75, IsImported = false });
+            shoppingList.Add(new Food { Name = "Imported box of chocolates", Price = 11.25, IsImported = true });
+            shoppingList.Add(new Food { Name = "Imported box of chocolates", Price = 11.25, IsImported = true });
+
+            BuyItems(shoppingList);
+            PrintReceipt(shoppingList);
+
+
         }
 
         private static void BuyItems(List<Product> products)
@@ -28,17 +62,23 @@ namespace SalesTaxCalculator
         {
             double totalSalesTaxes = 0;
             double totalToPay = 0;
+
             
-            foreach(Product product in productsBought)
+            for(int i = 0; i < productsBought.Count; i++)
             {
+                Product product = productsBought[i];
+
                 var itemsPaid = (from Product p in productsBought
                                  where p.GetType() == product.GetType()
-                                 select p);
+                                 select p).ToList();
 
                 int numberOfItemsPaid = itemsPaid.Count();
 
-                foreach (var item in itemsPaid)
+                foreach (Product item in itemsPaid)
                 {
+                    totalSalesTaxes += item.CalculateSalesTax();
+                    totalToPay += item.TotalPrice;
+
                     productsBought.Remove(item);
                 }
 
@@ -50,9 +90,6 @@ namespace SalesTaxCalculator
                 {
                     Console.WriteLine("{0}: {1}", product.Name, product.TotalPrice);
                 }
-
-                totalSalesTaxes += product.CalculateSalesTax() * numberOfItemsPaid;
-                totalToPay += product.TotalPrice * numberOfItemsPaid;
             }
 
             Console.WriteLine("Sales Taxes: {0}", totalSalesTaxes);

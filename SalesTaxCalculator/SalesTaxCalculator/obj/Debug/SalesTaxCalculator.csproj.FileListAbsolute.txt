@@ -1,1 +1,6 @@
 C:\Users\camilog\Documents\Hangar\Tech-Test\SalesTaxCalculator\SalesTaxCalculator\bin\Debug\SalesTaxCalculator.exe.config
+C:\Users\camilog\Documents\Hangar\Tech-Test\SalesTaxCalculator\SalesTaxCalculator\bin\Debug\SalesTaxCalculator.exe
+C:\Users\camilog\Documents\Hangar\Tech-Test\SalesTaxCalculator\SalesTaxCalculator\bin\Debug\SalesTaxCalculator.pdb
+C:\Users\camilog\Documents\Hangar\Tech-Test\SalesTaxCalculator\SalesTaxCalculator\obj\Debug\SalesTaxCalculator.csprojResolveAssemblyReference.cache
+C:\Users\camilog\Documents\Hangar\Tech-Test\SalesTaxCalculator\SalesTaxCalculator\obj\Debug\SalesTaxCalculator.exe
+C:\Users\camilog\Documents\Hangar\Tech-Test\SalesTaxCalculator\SalesTaxCalculator\obj\Debug\SalesTaxCalculator.pdb
